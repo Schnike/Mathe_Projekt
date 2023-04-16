@@ -77,6 +77,13 @@ public class Bouncy_Ball extends Animation {
             thread.changeTimeScaling(newScaling);
             currentScaling.setText(Double.toString(newScaling));
         });
+        scrollPanel.add(scrollLabel);
+        scrollPanel.add(scrollBar);
+
+        scrollPanel.add(timeScalingLabel);
+        scrollPanel.add(currentScaling);
+        controlFrame.pack();
+
 
     }
 
