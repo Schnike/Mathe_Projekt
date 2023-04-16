@@ -122,14 +122,22 @@ public class Bouncy_Ball extends Animation {
 
         int width = Konstanten.WINDOW_WIDTH;
         int height = Konstanten.WINDOW_HEIGHT;
-        double startX = 20;
+        double startX = 20; //Roter Ball
         double startY = 20;
-        double vX = 160 * 4;
-        double vY = 20 * 4;
+        double vX = 100*5;
+        double vY = 100*5;
         double currentX = startX;
         double currentY = startY;
         int diameter = 50;
         private double lastFrameTime = 0.0;
+        double startX_2 = width-20; //Blauer Ball
+        double startY_2 = 20;
+        double vX_2 = -100*5;
+        double vY_2 = 100*5;
+        double currentX_2 = startX_2;
+        double currentY_2 = startY_2;
+        int diameter_2 = 50;
+        private double lastFrameTime_2 = 0.0;
 
 
 
@@ -147,11 +155,17 @@ public class Bouncy_Ball extends Animation {
 
             g.setColor(Color.LIGHT_GRAY);
             g.fillRect(0, 0, width, height);
+
             double deltaTime = time - lastFrameTime;
             lastFrameTime = time;
 
+            double deltaTime_2 = time - lastFrameTime_2;
+            lastFrameTime_2 = time;
+
             currentX = currentX + (vX * deltaTime);
             currentY = currentY + (vY * deltaTime);
+            currentX_2 = currentX_2 + (vX_2 * deltaTime_2);
+            currentY_2 = currentY_2 + (vY_2 * deltaTime_2);
 
             // bounce might change x coordinate
 
@@ -173,7 +187,7 @@ public class Bouncy_Ball extends Animation {
             g.fillOval((int) currentX, (int) currentY, diameter, diameter);
 
             if (currentX >= width - diameter) {
-                // Object has hiyt the right-hand wall
+                // Object has hit the right-hand wall
                 vX = -vX;
                 currentX = currentX - 1;
 
@@ -193,6 +207,32 @@ public class Bouncy_Ball extends Animation {
                 // Object has hit the ceiling
                 vY = -vY;
                 currentY = currentY + 1;
+            }
+
+            g.setColor(Color.BLUE);
+            g.fillOval((int) currentX_2, (int) currentY_2, diameter_2, diameter_2);
+
+            if (currentX_2 >= width - diameter_2) {
+                // Object has hiyt the right-hand wall
+                vX_2 = -vX_2;
+                currentX_2 = currentX_2 - 1;
+
+            } else if (currentX_2 <= 0) { // else if to prevent double-checking hence saving performance
+                // Object has hit the left-hand wall
+                vX_2 = -vX_2;
+                currentX_2 = currentX_2 + 1;
+            }
+
+
+            if (currentY_2 >= height - diameter_2) {
+                // Object has hit the floor
+                vY_2 = -vY_2;
+                currentY_2 = currentY_2 - 1;
+
+            } else if (currentY_2 <= 0) {
+                // Object has hit the ceiling
+                vY_2 = -vY_2;
+                currentY_2 = currentY_2 + 1;
             }
         }
     }
