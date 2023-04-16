@@ -67,38 +67,39 @@ public class Bouncy_Ball extends Animation {
         panel.add(buttonPause);
 
         // set up second panel
-
+        //ScrollBar für Roten Ball
             JLabel el1 = new JLabel("Adjust elastic scaling red Ball:");
-            JLabel el1_timeScalingLabel = new JLabel("Current scaling :");
+            JLabel el1_elasticScalingLabel = new JLabel("Current scaling :");
             JLabel currentScaling_el1 = new JLabel("0.5");
 
-            JScrollBar scrollBar_el1 = new JScrollBar(Adjustable.HORIZONTAL, 1/10, 5/10, 0, 1);
+            JScrollBar scrollBar_el1 = new JScrollBar(Adjustable.HORIZONTAL, 50, 10, 0, 110);
             scrollBar_el1.addAdjustmentListener(E1 -> {
-                double newScaling_el1 = (double) scrollBar_el1.getValue() / 5/10;
-                thread.changeTimeScaling(newScaling_el1);
-                currentScaling_el1.setText(Double.toString(newScaling_el1));});
-
+                double newScaling_el1 = (double) scrollBar_el1.getValue() / 100;
+                double eR=newScaling_el1;
+                currentScaling_el1.setText(Double.toString(newScaling_el1));
+            });
+                //ScrollBar für Blauen Ball
                 JLabel el2 = new JLabel("Adjust elastic scaling blue Ball:");
-                JLabel el2_timeScalingLabel = new JLabel("Current scaling :");
+                JLabel el2_elasticScalingLabel = new JLabel("Current scaling :");
                 JLabel currentScaling_el2 = new JLabel("0.5");
 
-                JScrollBar scrollBar_el2 = new JScrollBar(Adjustable.HORIZONTAL, 1/10, 5/10, 0, 1);
+                JScrollBar scrollBar_el2 = new JScrollBar(Adjustable.HORIZONTAL, 50, 10, 0, 110);
                 scrollBar_el2.addAdjustmentListener(E2 -> {
-                    double newScaling_el2 = (double) scrollBar_el2.getValue() / 5/10;
-                    thread.changeTimeScaling(newScaling_el2);
+                    double newScaling_el2 = (double) scrollBar_el2.getValue() / 100;
+                    double eB=newScaling_el2;
                     currentScaling_el2.setText(Double.toString(newScaling_el2));
         });
         scrollPanel.add(el1);
         scrollPanel.add(scrollBar_el1);
 
-        scrollPanel.add(el1_timeScalingLabel);
+        scrollPanel.add(el1_elasticScalingLabel);
         scrollPanel.add(currentScaling_el1);
         controlFrame.pack();
 
         scrollPanel.add(el2);
         scrollPanel.add(scrollBar_el2);
 
-        scrollPanel.add(el2_timeScalingLabel);
+        scrollPanel.add(el2_elasticScalingLabel);
         scrollPanel.add(currentScaling_el2);
         controlFrame.pack();
     }
