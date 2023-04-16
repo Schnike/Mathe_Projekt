@@ -108,17 +108,24 @@ public class Bouncy_Ball extends Animation {
         int height = Konstanten.WINDOW_HEIGHT;
         double startX = 20;
         double startY = 20;
-        double vX = 160 * 2;
-        double vY = 20 * 2;
+        double vX = 160 * 4;
+        double vY = 20 * 4;
         double currentX = startX;
         double currentY = startY;
         int diameter = 50;
         private double lastFrameTime = 0.0;
 
+
+
         // drawing operations should be done in this method
         @Override
         protected void paintComponent(Graphics g) {
 
+            Graphics2D g2d;
+            g2d = (Graphics2D) g;
+
+            int originX = 0;
+            int originY = 0;
             super.paintComponent(g);
             time = t.getTimeInSeconds();
 
@@ -132,11 +139,25 @@ public class Bouncy_Ball extends Animation {
 
             // bounce might change x coordinate
 
+            g2d.setStroke(new BasicStroke(5.0f)); //line width
+
+            g.setColor(Color.BLACK);
+            g.drawLine(originX + 100, originY, originX, originY + 100); //band oben links
+
+            g.setColor(Color.BLACK);
+            g.drawLine(originX + 100, originY+height, originX, originY + height - 100); //band unten links
+
+            g.setColor(Color.BLACK);
+            g.drawLine(originX + width - 100, originY, originX + width, originY + 100); //band oben rechts
+
+            g.setColor(Color.BLACK);
+            g.drawLine(originX + +width - 100, originY+height, originX + width, originY + height - 100); //band unten rechts
+
             g.setColor(Color.RED);
             g.fillOval((int) currentX, (int) currentY, diameter, diameter);
 
             if (currentX >= width - diameter) {
-                // Object has hit the right-hand wall
+                // Object has hiyt the right-hand wall
                 vX = -vX;
                 currentX = currentX - 1;
 
@@ -145,6 +166,7 @@ public class Bouncy_Ball extends Animation {
                 vX = -vX;
                 currentX = currentX + 1;
             }
+
 
             if (currentY >= height - diameter) {
                 // Object has hit the floor
