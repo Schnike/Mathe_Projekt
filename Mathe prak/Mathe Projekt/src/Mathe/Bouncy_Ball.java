@@ -26,6 +26,7 @@ public class Bouncy_Ball extends Animation {
         frame.setVisible(true);
 
         frames.add(frame);
+        createControlFrame(applicationTimeThread);
         return frames;
     }
 
