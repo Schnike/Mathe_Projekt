@@ -34,7 +34,7 @@ public class Bouncy_Ball extends Animation {
         // Create a new frame
         JFrame controlFrame = new JFrame("Mathematik und Simulation");
         controlFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        controlFrame.setLayout(new GridLayout(1, 2, 10, 0)); // manages the layout of panels in the frame
+        controlFrame.setLayout(new GridLayout(2, 2, 10, 0)); // manages the layout of panels in the frame
 
         // Add a JPanel as the new drawing surface
         JPanel panel = new JPanel();
@@ -67,24 +67,40 @@ public class Bouncy_Ball extends Animation {
         panel.add(buttonPause);
 
         // set up second panel
-        JLabel scrollLabel = new JLabel("Adjust time scaling:");
-        JLabel timeScalingLabel = new JLabel("Current scaling :");
-        JLabel currentScaling = new JLabel("1");
 
-        JScrollBar scrollBar = new JScrollBar(Adjustable.HORIZONTAL, 1, 5, -50, 55);
-        scrollBar.addAdjustmentListener(e -> {
-            double newScaling = (double) scrollBar.getValue() / 5;
-            thread.changeTimeScaling(newScaling);
-            currentScaling.setText(Double.toString(newScaling));
+            JLabel el1 = new JLabel("Adjust elastic scaling red Ball:");
+            JLabel el1_timeScalingLabel = new JLabel("Current scaling :");
+            JLabel currentScaling_el1 = new JLabel("0.5");
+
+            JScrollBar scrollBar_el1 = new JScrollBar(Adjustable.HORIZONTAL, 1/10, 5/10, 0, 1);
+            scrollBar_el1.addAdjustmentListener(E1 -> {
+                double newScaling_el1 = (double) scrollBar_el1.getValue() / 5/10;
+                thread.changeTimeScaling(newScaling_el1);
+                currentScaling_el1.setText(Double.toString(newScaling_el1));});
+
+                JLabel el2 = new JLabel("Adjust elastic scaling blue Ball:");
+                JLabel el2_timeScalingLabel = new JLabel("Current scaling :");
+                JLabel currentScaling_el2 = new JLabel("0.5");
+
+                JScrollBar scrollBar_el2 = new JScrollBar(Adjustable.HORIZONTAL, 1/10, 5/10, 0, 1);
+                scrollBar_el2.addAdjustmentListener(E2 -> {
+                    double newScaling_el2 = (double) scrollBar_el2.getValue() / 5/10;
+                    thread.changeTimeScaling(newScaling_el2);
+                    currentScaling_el2.setText(Double.toString(newScaling_el2));
         });
-        scrollPanel.add(scrollLabel);
-        scrollPanel.add(scrollBar);
+        scrollPanel.add(el1);
+        scrollPanel.add(scrollBar_el1);
 
-        scrollPanel.add(timeScalingLabel);
-        scrollPanel.add(currentScaling);
+        scrollPanel.add(el1_timeScalingLabel);
+        scrollPanel.add(currentScaling_el1);
         controlFrame.pack();
 
+        scrollPanel.add(el2);
+        scrollPanel.add(scrollBar_el2);
 
+        scrollPanel.add(el2_timeScalingLabel);
+        scrollPanel.add(currentScaling_el2);
+        controlFrame.pack();
     }
 
     class Bouncy_Ball_Panel extends JPanel {
