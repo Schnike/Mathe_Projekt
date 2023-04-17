@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Bouncy_Ball extends Animation {
     static JButton buttonContinue = new JButton();
-    static JButton buttonStop = new JButton();
+    static JButton buttonStart = new JButton();
     static JButton buttonPause = new JButton();
 
 
@@ -47,23 +47,23 @@ public class Bouncy_Ball extends Animation {
         controlFrame.setVisible(true);
 
         // set up first Panel
+        buttonStart = new JButton();
+        buttonStart.setBackground(Color.WHITE);
+        buttonStart.addActionListener(new Control_Panel(buttonStart, controlFrame, thread));
+        buttonStart.setText("Start");
+
         buttonContinue = new JButton();
         buttonContinue.setBackground(Color.WHITE);
         buttonContinue.addActionListener(new Control_Panel(buttonContinue, controlFrame, thread));
         buttonContinue.setText("Continue");
-
-        buttonStop = new JButton();
-        buttonStop.setBackground(Color.WHITE);
-        buttonStop.addActionListener(new Control_Panel(buttonStop, controlFrame, thread));
-        buttonStop.setText("Stop (forever)");
 
         buttonPause = new JButton();
         buttonPause.setBackground(Color.WHITE);
         buttonPause.addActionListener(new Control_Panel(buttonPause, controlFrame, thread));
         buttonPause.setText("Pause");
 
+        panel.add(buttonStart);
         panel.add(buttonContinue);
-        panel.add(buttonStop);
         panel.add(buttonPause);
 
         // set up second panel
@@ -146,94 +146,97 @@ public class Bouncy_Ball extends Animation {
         @Override
         protected void paintComponent(Graphics g) {
 
-            Graphics2D g2d;
-            g2d = (Graphics2D) g;
+                Graphics2D g2d;
+                g2d = (Graphics2D) g;
 
-            int originX = 0;
-            int originY = 0;
-            super.paintComponent(g);
-            time = t.getTimeInSeconds();
+                int originX = 0;
+                int originY = 0;
+                super.paintComponent(g);
 
-            g.setColor(Color.LIGHT_GRAY);
-            g.fillRect(0, 0, width, height);
+                g.setColor(Color.LIGHT_GRAY);
+                g.fillRect(0, 0, width, height);
 
-            double deltaTime = time - lastFrameTime;
-            lastFrameTime = time;
+                time = t.getTimeInSeconds();
 
-            double deltaTime_2 = time - lastFrameTime_2;
-            lastFrameTime_2 = time;
+                double deltaTime = time - lastFrameTime;
+                lastFrameTime = time;
 
-            currentX = currentX + (vX * deltaTime);
-            currentY = currentY + (vY * deltaTime);
-            currentX_2 = currentX_2 + (vX_2 * deltaTime_2);
-            currentY_2 = currentY_2 + (vY_2 * deltaTime_2);
+                double deltaTime_2 = time - lastFrameTime_2;
+                lastFrameTime_2 = time;
+                // bounce might change x coordinate
 
-            // bounce might change x coordinate
+                g2d.setStroke(new BasicStroke(5.0f)); //line width
 
-            g2d.setStroke(new BasicStroke(5.0f)); //line width
+                g.setColor(Color.BLACK);
+                g.drawLine(originX + 100, originY, originX, originY + 100); //band oben links
 
-            g.setColor(Color.BLACK);
-            g.drawLine(originX + 100, originY, originX, originY + 100); //band oben links
+                g.setColor(Color.BLACK);
+                g.drawLine(originX + 100, originY + height, originX, originY + height - 100); //band unten links
 
-            g.setColor(Color.BLACK);
-            g.drawLine(originX + 100, originY+height, originX, originY + height - 100); //band unten links
+                g.setColor(Color.BLACK);
+                g.drawLine(originX + width - 100, originY, originX + width, originY + 100); //band oben rechts
 
-            g.setColor(Color.BLACK);
-            g.drawLine(originX + width - 100, originY, originX + width, originY + 100); //band oben rechts
+                g.setColor(Color.BLACK);
+                g.drawLine(originX + +width - 100, originY + height, originX + width, originY + height - 100); //band unten rechts
 
-            g.setColor(Color.BLACK);
-            g.drawLine(originX + +width - 100, originY+height, originX + width, originY + height - 100); //band unten rechts
+                g.setColor(Color.BLUE);
+                g.fillOval((int) currentX_2, (int) currentY_2, diameter_2, diameter_2);
 
-            g.setColor(Color.RED);
-            g.fillOval((int) currentX, (int) currentY, diameter, diameter);
+                g.setColor(Color.RED);
+                g.fillOval((int) currentX, (int) currentY, diameter, diameter);
 
-            if (currentX >= width - diameter) {
-                // Object has hit the right-hand wall
-                vX = -vX;
-                currentX = currentX - 1;
+            if(true==Control_Panel.Start) {
 
-            } else if (currentX <= 0) { // else if to prevent double-checking hence saving performance
-                // Object has hit the left-hand wall
-                vX = -vX;
-                currentX = currentX + 1;
-            }
+                currentX = currentX + (vX * deltaTime);
+                currentY = currentY + (vY * deltaTime);
+                currentX_2 = currentX_2 + (vX_2 * deltaTime_2);
+                currentY_2 = currentY_2 + (vY_2 * deltaTime_2);
 
+                if (currentX >= width - diameter) {
+                    // Object has hit the right-hand wall
+                    vX = -vX;
+                    currentX = currentX - 1;
 
-            if (currentY >= height - diameter) {
-                // Object has hit the floor
-                vY = -vY;
-                currentY = currentY - 1;
-
-            } else if (currentY <= 0) {
-                // Object has hit the ceiling
-                vY = -vY;
-                currentY = currentY + 1;
-            }
-
-            g.setColor(Color.BLUE);
-            g.fillOval((int) currentX_2, (int) currentY_2, diameter_2, diameter_2);
-
-            if (currentX_2 >= width - diameter_2) {
-                // Object has hiyt the right-hand wall
-                vX_2 = -vX_2;
-                currentX_2 = currentX_2 - 1;
-
-            } else if (currentX_2 <= 0) { // else if to prevent double-checking hence saving performance
-                // Object has hit the left-hand wall
-                vX_2 = -vX_2;
-                currentX_2 = currentX_2 + 1;
-            }
+                } else if (currentX <= 0) { // else if to prevent double-checking hence saving performance
+                    // Object has hit the left-hand wall
+                    vX = -vX;
+                    currentX = currentX + 1;
+                }
 
 
-            if (currentY_2 >= height - diameter_2) {
-                // Object has hit the floor
-                vY_2 = -vY_2;
-                currentY_2 = currentY_2 - 1;
+                if (currentY >= height - diameter) {
+                    // Object has hit the floor
+                    vY = -vY;
+                    currentY = currentY - 1;
 
-            } else if (currentY_2 <= 0) {
-                // Object has hit the ceiling
-                vY_2 = -vY_2;
-                currentY_2 = currentY_2 + 1;
+                } else if (currentY <= 0) {
+                    // Object has hit the ceiling
+                    vY = -vY;
+                    currentY = currentY + 1;
+                }
+
+                if (currentX_2 >= width - diameter_2) {
+                    // Object has hiyt the right-hand wall
+                    vX_2 = -vX_2;
+                    currentX_2 = currentX_2 - 1;
+
+                } else if (currentX_2 <= 0) { // else if to prevent double-checking hence saving performance
+                    // Object has hit the left-hand wall
+                    vX_2 = -vX_2;
+                    currentX_2 = currentX_2 + 1;
+                }
+
+
+                if (currentY_2 >= height - diameter_2) {
+                    // Object has hit the floor
+                    vY_2 = -vY_2;
+                    currentY_2 = currentY_2 - 1;
+
+                } else if (currentY_2 <= 0) {
+                    // Object has hit the ceiling
+                    vY_2 = -vY_2;
+                    currentY_2 = currentY_2 + 1;
+                }
             }
         }
     }

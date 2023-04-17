@@ -1,8 +1,8 @@
 package Mathe;
 
 public class Konstanten {
-    public static int WINDOW_WIDTH = 1000;
-    public static int WINDOW_HEIGHT = 800;
+    public static int WINDOW_WIDTH = 800;
+    public static int WINDOW_HEIGHT = 600;
 
     public static int FPS = 100;
     public static int TPF = 1000/FPS;
