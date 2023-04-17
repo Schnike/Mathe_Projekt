@@ -133,7 +133,7 @@ public class Bouncy_Ball extends Animation {
         private double lastFrameTime = 0.0;
         int diameter_2 = 50;
         double startX_2 = width-50-diameter_2; //Blauer Ball
-        double startY_2 = height/20;
+        double startY_2 = height/2;
         double vX_2 = -100*5;
         double vY_2 = 100*5;
         double currentX_2 = startX_2;
