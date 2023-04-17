@@ -123,21 +123,21 @@ public class Bouncy_Ball extends Animation {
 
         int width = Konstanten.WINDOW_WIDTH;
         int height = Konstanten.WINDOW_HEIGHT;
-        double startX = 20; //Roter Ball
-        double startY = 20;
+        int diameter = 50;
+        double startX = 50; //Roter Ball
+        double startY = height/2;
         double vX = 100*5;
         double vY = 100*5;
         double currentX = startX;
         double currentY = startY;
-        int diameter = 50;
         private double lastFrameTime = 0.0;
-        double startX_2 = width-20; //Blauer Ball
-        double startY_2 = 20;
+        int diameter_2 = 50;
+        double startX_2 = width-50-diameter_2; //Blauer Ball
+        double startY_2 = height/20;
         double vX_2 = -100*5;
         double vY_2 = 100*5;
         double currentX_2 = startX_2;
         double currentY_2 = startY_2;
-        int diameter_2 = 50;
         private double lastFrameTime_2 = 0.0;
 
 
