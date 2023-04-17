@@ -20,7 +20,9 @@ public class Control_Panel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(button.equals(Bouncy_Ball.buttonStart)){
-            Start=true;}
+            Start=true;
+            System.out.println("Start pressed");
+        }
         if (button.equals(Bouncy_Ball.buttonPause)) {
             applicationTimeThread.pauseTime();
             System.out.println("Pause pressed");
