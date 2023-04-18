@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 public class Control_Panel implements ActionListener {
     public static boolean Start=false;
+    public static boolean Reset=false;
     JButton button;
     JFrame frame;
     ApplicationTime applicationTimeThread;
@@ -22,6 +23,11 @@ public class Control_Panel implements ActionListener {
         if(button.equals(Bouncy_Ball.buttonStart)){
             Start=true;
             System.out.println("Start pressed");
+        }
+        if(button.equals(Bouncy_Ball.buttonReset)){
+            Reset=true;
+            Start=false;
+            System.out.println("Reset pressed");
         }
         if (button.equals(Bouncy_Ball.buttonPause)) {
             applicationTimeThread.pauseTime();

@@ -10,6 +10,9 @@ public class Bouncy_Ball extends Animation {
     static JButton buttonContinue = new JButton();
     static JButton buttonStart = new JButton();
     static JButton buttonPause = new JButton();
+    static JButton buttonReset = new JButton();
+    private static double eR;
+    public static double eB;
 
 
     @Override
@@ -62,9 +65,15 @@ public class Bouncy_Ball extends Animation {
         buttonPause.addActionListener(new Control_Panel(buttonPause, controlFrame, thread));
         buttonPause.setText("Pause");
 
+        buttonReset = new JButton();
+        buttonReset.setBackground(Color.WHITE);
+        buttonReset.addActionListener(new Control_Panel(buttonReset, controlFrame, thread));
+        buttonReset.setText("Reset");
+
         panel.add(buttonStart);
-        panel.add(buttonContinue);
+        panel.add(buttonReset);
         panel.add(buttonPause);
+        panel.add(buttonContinue);
 
         // set up second panel
         //ScrollBar für Roten Ball
@@ -75,7 +84,7 @@ public class Bouncy_Ball extends Animation {
             JScrollBar scrollBar_el1 = new JScrollBar(Adjustable.HORIZONTAL, 50, 10, 0, 110);
             scrollBar_el1.addAdjustmentListener(E1 -> {
                 double newScaling_el1 = (double) scrollBar_el1.getValue() / 100;
-                double eR=newScaling_el1;
+                eR=newScaling_el1;
                 currentScaling_el1.setText(Double.toString(newScaling_el1));
             });
                 //ScrollBar für Blauen Ball
@@ -86,7 +95,7 @@ public class Bouncy_Ball extends Animation {
                 JScrollBar scrollBar_el2 = new JScrollBar(Adjustable.HORIZONTAL, 50, 10, 0, 110);
                 scrollBar_el2.addAdjustmentListener(E2 -> {
                     double newScaling_el2 = (double) scrollBar_el2.getValue() / 100;
-                    double eB=newScaling_el2;
+                    eB=newScaling_el2;
                     currentScaling_el2.setText(Double.toString(newScaling_el2));
         });
         scrollPanel.add(el1);
@@ -111,13 +120,17 @@ public class Bouncy_Ball extends Animation {
         private Ball k1;
         private Ball k2;
         private double time;
+        private double currentX_1=50;
+        private double currentX_2=Konstanten.WINDOW_WIDTH-100;
+        private double currentY_1=Konstanten.WINDOW_HEIGHT/2;
+        private double currentY_2=Konstanten.WINDOW_HEIGHT/2;
 
         public Bouncy_Ball_Panel(ApplicationTime thread) {
-            k1 = new Ball(50,Konstanten.WINDOW_HEIGHT/2,50,100,-100); //blue
-            k2 = new Ball(Konstanten.WINDOW_WIDTH-100,Konstanten.WINDOW_HEIGHT/2,50,-100,-100);//red
-
+            k1 = new Ball(currentX_1,currentY_1,50,100,-100); //blue
+            k2 = new Ball(currentX_2,currentY_2,50,-100,-100);//red
             this.t = thread;
         }
+
 
 
         // set this panel's preferred size for auto-sizing the container JFrame
@@ -150,12 +163,18 @@ public class Bouncy_Ball extends Animation {
                 lastFrameTime = time;
 
                 // bounce might change x coordinate
-
+                if(Control_Panel.Reset==true){
+                    Control_Panel.Reset=false;
+                    k1.currentX=currentX_1;
+                    k1.currentY=currentY_1;
+                    k2.currentX=currentX_2;
+                    k2.currentY=currentY_2;
+                }
                 k1.draw(g,new Color(0f,0f,1f,0.5f));
                 k2.draw(g,new Color(1f,0f,0f,0.5f));
                 if(true==Control_Panel.Start){
-                    k1.moveInArea(deltaTime,width,height);
-                    k2.moveInArea(deltaTime,width,height);
+                    k1.moveInArea(deltaTime,width,height,eR);
+                    k2.moveInArea(deltaTime,width,height,eB);
                 }
 
                 g2d.setStroke(new BasicStroke(5.0f)); //line width
@@ -170,7 +189,7 @@ public class Bouncy_Ball extends Animation {
                 g.drawLine(originX + width - 100, originY, originX + width, originY + 100); //band oben rechts
 
                 g.setColor(Color.BLACK);
-                g.drawLine(originX + +width - 100, originY + height, originX + width, originY + height - 100); //band unten rechts
+                g.drawLine(originX + width - 100, originY + height, originX + width, originY + height - 100); //band unten rechts
         }
     }
 }
