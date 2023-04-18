@@ -108,10 +108,14 @@ public class Bouncy_Ball extends Animation {
 
         // panel has a single time tracking thread associated with it
         private final ApplicationTime t;
-
+        private Ball k1;
+        private Ball k2;
         private double time;
 
         public Bouncy_Ball_Panel(ApplicationTime thread) {
+            k1 = new Ball(50,Konstanten.WINDOW_HEIGHT/2,50,100,-100); //blue
+            k2 = new Ball(Konstanten.WINDOW_WIDTH-100,Konstanten.WINDOW_HEIGHT/2,50,-100,-100);//red
+
             this.t = thread;
         }
 
@@ -123,23 +127,7 @@ public class Bouncy_Ball extends Animation {
 
         int width = Konstanten.WINDOW_WIDTH;
         int height = Konstanten.WINDOW_HEIGHT;
-        int diameter = 50;
-        double startX = 50; //Roter Ball
-        double startY = height/2;
-        double vX = 100*5;
-        double vY = 100*5;
-        double currentX = startX;
-        double currentY = startY;
         private double lastFrameTime = 0.0;
-        int diameter_2 = 50;
-        double startX_2 = width-50-diameter_2; //Blauer Ball
-        double startY_2 = height/2;
-        double vX_2 = -100*5;
-        double vY_2 = 100*5;
-        double currentX_2 = startX_2;
-        double currentY_2 = startY_2;
-        private double lastFrameTime_2 = 0.0;
-
 
 
         // drawing operations should be done in this method
@@ -161,9 +149,14 @@ public class Bouncy_Ball extends Animation {
                 double deltaTime = time - lastFrameTime;
                 lastFrameTime = time;
 
-                double deltaTime_2 = time - lastFrameTime_2;
-                lastFrameTime_2 = time;
                 // bounce might change x coordinate
+
+                k1.draw(g,new Color(0f,0f,1f,0.5f));
+                k2.draw(g,new Color(1f,0f,0f,0.5f));
+                if(true==Control_Panel.Start){
+                    k1.moveInArea(deltaTime,width,height);
+                    k2.moveInArea(deltaTime,width,height);
+                }
 
                 g2d.setStroke(new BasicStroke(5.0f)); //line width
 
@@ -178,66 +171,6 @@ public class Bouncy_Ball extends Animation {
 
                 g.setColor(Color.BLACK);
                 g.drawLine(originX + +width - 100, originY + height, originX + width, originY + height - 100); //band unten rechts
-
-                g.setColor(Color.BLUE);
-                g.fillOval((int) currentX_2, (int) currentY_2, diameter_2, diameter_2);
-
-                g.setColor(Color.RED);
-                g.fillOval((int) currentX, (int) currentY, diameter, diameter);
-
-            if(true==Control_Panel.Start) {
-
-                currentX = currentX + (vX * deltaTime);
-                currentY = currentY + (vY * deltaTime);
-                currentX_2 = currentX_2 + (vX_2 * deltaTime_2);
-                currentY_2 = currentY_2 + (vY_2 * deltaTime_2);
-
-                if (currentX >= width - diameter) {
-                    // Object has hit the right-hand wall
-                    vX = -vX;
-                    currentX = currentX - 1;
-
-                } else if (currentX <= 0) { // else if to prevent double-checking hence saving performance
-                    // Object has hit the left-hand wall
-                    vX = -vX;
-                    currentX = currentX + 1;
-                }
-
-
-                if (currentY >= height - diameter) {
-                    // Object has hit the floor
-                    vY = -vY;
-                    currentY = currentY - 1;
-
-                } else if (currentY <= 0) {
-                    // Object has hit the ceiling
-                    vY = -vY;
-                    currentY = currentY + 1;
-                }
-
-                if (currentX_2 >= width - diameter_2) {
-                    // Object has hiyt the right-hand wall
-                    vX_2 = -vX_2;
-                    currentX_2 = currentX_2 - 1;
-
-                } else if (currentX_2 <= 0) { // else if to prevent double-checking hence saving performance
-                    // Object has hit the left-hand wall
-                    vX_2 = -vX_2;
-                    currentX_2 = currentX_2 + 1;
-                }
-
-
-                if (currentY_2 >= height - diameter_2) {
-                    // Object has hit the floor
-                    vY_2 = -vY_2;
-                    currentY_2 = currentY_2 - 1;
-
-                } else if (currentY_2 <= 0) {
-                    // Object has hit the ceiling
-                    vY_2 = -vY_2;
-                    currentY_2 = currentY_2 + 1;
-                }
-            }
         }
     }
 }
