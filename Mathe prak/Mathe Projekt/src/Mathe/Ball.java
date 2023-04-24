@@ -29,24 +29,24 @@ public class Ball {
 
         if (currentX >= width - diameter) {
             // Object has hit the right-hand wall
-            vX = -vX*el;
+            vX = -vX;
             currentX = currentX - 1;
 
         } else if (currentX <= 0) { // else if to prevent double-checking hence saving performance
             // Object has hit the left-hand wall
-            vX = -vX*el;
+            vX = -vX;
             currentX = currentX + 1;
         }
 
 
         if (currentY >= height - diameter) {
             // Object has hit the floor
-            vY = -vY*el;
+            vY = -vY;
             currentY = currentY - 1;
 
         } else if (currentY <= 0) {
             // Object has hit the ceiling
-            vY = -vY*el;
+            vY = -vY;
             currentY = currentY + 1;
         }
 
