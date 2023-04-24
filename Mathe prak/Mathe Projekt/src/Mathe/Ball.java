@@ -10,6 +10,8 @@ public class Ball {
     double diameter;
     double vX;
     double vY;
+    double normal1[]={1,1};
+    double normal2[]={-1,1};
 
     public Ball(double currentX, double currentY, double diameter, double vX, double vY) {
         this.currentX=currentX;
@@ -32,23 +34,31 @@ public class Ball {
             vX = -vX;
             currentX = currentX - 1;
 
-        } else if (currentX <= 0) { // else if to prevent double-checking hence saving performance
+        }
+        if (currentX <= 0) { // else if to prevent double-checking hence saving performance
             // Object has hit the left-hand wall
             vX = -vX;
             currentX = currentX + 1;
         }
-
-
         if (currentY >= height - diameter) {
             // Object has hit the floor
             vY = -vY;
             currentY = currentY - 1;
 
-        } else if (currentY <= 0) {
+        }
+        if (currentY <= 0) {
             // Object has hit the ceiling
             vY = -vY;
             currentY = currentY + 1;
         }
+        if (-currentX-currentY+100+(diameter/2)>0){ // obere like ecke
+            double v[]=Physik.Ball_Kuss(normal1, vX, vY);
+            vX=v[0];
+            vY=v[1];
+            currentY = currentY + 1;
+            currentX = currentY +1;
+        }
+
 
     }
 }
