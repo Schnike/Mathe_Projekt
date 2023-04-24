@@ -12,6 +12,7 @@ public class Ball {
     double vY;
     double normal1[]={1,1};
     double normal2[]={-1,1};
+    double v[];
 
     public Ball(double currentX, double currentY, double diameter, double vX, double vY) {
         this.currentX=currentX;
@@ -52,11 +53,19 @@ public class Ball {
             currentY = currentY + 1;
         }
         if (-currentX-currentY+100+(diameter/2)>0){ // obere like ecke
-            double v[]=Physik.Ball_Kuss(normal1, vX, vY);
+            v=Physik.Ball_Kuss(normal1, vX, vY);
             vX=v[0];
             vY=v[1];
             currentY = currentY + 1;
-            currentX = currentY +1;
+            currentX = currentY + 1;
+        }
+        if ((-currentX+width)-currentY+400-(diameter/2)<0){ // untere rechte ecke
+            v=Physik.Ball_Kuss(normal1, vX, vY);
+            vX=v[0];
+            vY=v[1];
+            currentY = currentY - 1;
+            currentX = currentY - 1;
+
         }
 
 

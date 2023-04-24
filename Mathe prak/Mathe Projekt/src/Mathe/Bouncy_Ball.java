@@ -126,8 +126,8 @@ public class Bouncy_Ball extends Animation {
         private double currentY_2=Konstanten.WINDOW_HEIGHT/2;
 
         public Bouncy_Ball_Panel(ApplicationTime thread) {
-            k1 = new Ball(currentX_1,currentY_1,50,100,-100); //blue
-            k2 = new Ball(currentX_2,currentY_2,50,-100,-100);//red
+            k1 = new Ball(currentX_1,currentY_1,50,300,-300); //blue
+            k2 = new Ball(currentX_2,currentY_2,50,-300,-300);//red
             this.t = thread;
         }
 
