@@ -175,6 +175,9 @@ public class Bouncy_Ball extends Animation {
                 if(true==Control_Panel.Start){
                     k1.moveInArea(deltaTime,width,height,eR);
                     k2.moveInArea(deltaTime,width,height,eB);
+                    if(Physik.ball_treffen(currentX_1,currentY_1,50, currentX_2,currentY_2,50) == true){
+                        k1.vX = -k1.vX;
+                    }
                 }
 
                 g2d.setStroke(new BasicStroke(5.0f)); //line width
