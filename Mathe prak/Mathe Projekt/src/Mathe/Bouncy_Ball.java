@@ -117,20 +117,28 @@ public class Bouncy_Ball extends Animation {
 
         // panel has a single time tracking thread associated with it
         private final ApplicationTime t;
+        private double time;
+        private final double currentX_1=50;
+        private final double currentX_2=Konstanten.WINDOW_WIDTH-100;
+        private final double currentY_1=Konstanten.WINDOW_HEIGHT/2;
+        private final double currentY_2=Konstanten.WINDOW_HEIGHT/2;
+        private final double vX=300;
+        private final double vY=300;
+        private final double diameter=50;
         private Ball k1;
         private Ball k2;
-        private double time;
-        private double currentX_1=50;
-        private double currentX_2=Konstanten.WINDOW_WIDTH-100;
-        private double currentY_1=Konstanten.WINDOW_HEIGHT/2;
-        private double currentY_2=Konstanten.WINDOW_HEIGHT/2;
+        private Ball s1;
+        private Ball s2;
 
         public Bouncy_Ball_Panel(ApplicationTime thread) {
-            k1 = new Ball(currentX_1,currentY_1,50,300,-300); //blue
-            k2 = new Ball(currentX_2,currentY_2,50,-300,-300);//red
+            k1 = new Ball(currentX_1, currentY_1, diameter, vX, -vY); //blue
+            k2 = new Ball(currentX_2, currentY_2, diameter, -vX, -vY);//red
+            s1 = new Ball(k1);
+            s2 = new Ball(k2);
+            System.out.println(s1.vX);
+            System.out.println("Test");
             this.t = thread;
         }
-
 
 
         // set this panel's preferred size for auto-sizing the container JFrame
@@ -163,12 +171,11 @@ public class Bouncy_Ball extends Animation {
                 lastFrameTime = time;
 
                 // bounce might change x coordinate
+
                 if(Control_Panel.Reset==true){
                     Control_Panel.Reset=false;
-                    k1.currentX=currentX_1;
-                    k1.currentY=currentY_1;
-                    k2.currentX=currentX_2;
-                    k2.currentY=currentY_2;
+                    k1=new Ball(s1);
+                    k2=new Ball(s2);
                 }
                 k1.draw(g,new Color(0f,0f,1f,0.5f));
                 k2.draw(g,new Color(1f,0f,0f,0.5f));

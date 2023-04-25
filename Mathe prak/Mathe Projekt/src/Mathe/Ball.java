@@ -21,6 +21,14 @@ public class Ball {
         this.vX=vX;
         this.vY=vY;
     }
+    public Ball(Ball k1)
+    {
+        this.currentX = k1.currentX;
+        this.currentY = k1.currentY;
+        this.diameter = k1.diameter;
+        this.vX = k1.vX;
+        this.vY = k1.vY;
+    }
     public void draw(Graphics g,Color c) {
         Graphics2D g2=(Graphics2D)g;
         g2.setColor(c);
@@ -31,24 +39,24 @@ public class Ball {
         currentY = currentY + (vY * deltaTime);
 
         if (currentX >= width - diameter) {
-            // Object has hit the right-hand wall
+            // rechte Wand
             vX = -vX;
             currentX = currentX - 1;
 
         }
-        if (currentX <= 0) { // else if to prevent double-checking hence saving performance
-            // Object has hit the left-hand wall
+        if (currentX <= 0) {
+            // Linke Wand
             vX = -vX;
             currentX = currentX + 1;
         }
         if (currentY >= height - diameter) {
-            // Object has hit the floor
+            // Untere Wand
             vY = -vY;
             currentY = currentY - 1;
 
         }
         if (currentY <= 0) {
-            // Object has hit the ceiling
+            // Obere Wand
             vY = -vY;
             currentY = currentY + 1;
         }
@@ -59,7 +67,7 @@ public class Ball {
             currentY = currentY + 1;
             currentX = currentY + 1;
         }
-        if ((-currentX+width)-currentY+400-(diameter/2)<0){ // untere rechte ecke
+        if ((-currentX+width)-currentY+height-100-(diameter/2)<0){ // untere rechte ecke
             v=Physik.Banden_Kuss(normal1, vX, vY);
             vX=v[0];
             vY=v[1];
