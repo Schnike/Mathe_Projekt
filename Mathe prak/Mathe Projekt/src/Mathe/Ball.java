@@ -40,24 +40,24 @@ public class Ball {
 
         if (currentX >= width - diameter) {
             // rechte Wand
-            vX = -vX;
+            vX = -vX*el;
             currentX = currentX - 1;
 
         }
         if (currentX <= 0) {
             // Linke Wand
-            vX = -vX;
+            vX = -vX*el;
             currentX = currentX + 1;
         }
         if (currentY >= height - diameter) {
             // Untere Wand
-            vY = -vY;
+            vY = -vY*el;
             currentY = currentY - 1;
 
         }
         if (currentY <= 0) {
             // Obere Wand
-            vY = -vY;
+            vY = -vY*el;
             currentY = currentY + 1;
         }
         if (-currentX-currentY+100+(diameter/2)>0){ // obere like ecke
@@ -65,17 +65,28 @@ public class Ball {
             vX=v[0];
             vY=v[1];
             currentY = currentY + 1;
-            currentX = currentY + 1;
+            currentX = currentX + 1;
         }
-        if ((-currentX+width)-currentY+height-100-(diameter/2)<0){ // untere rechte ecke
+        if ((-currentX+width)-currentY+400-(diameter/2)<0){ // untere rechte ecke
             v=Physik.Banden_Kuss(normal1, vX, vY);
             vX=v[0];
             vY=v[1];
             currentY = currentY - 1;
-            currentX = currentY - 1;
-
+            currentX = currentX - 1;
         }
-
-
+        if ((width-currentX)-(150-currentY)-(diameter/2)<0){ // obere rechte ecke
+            v=Physik.Banden_Kuss(normal2,vX,vY);
+            vY=v[1];
+            vX=v[0];
+            currentX = currentX - 1;
+            currentY = currentY + 1;
+        }
+        if (currentX-currentY+450-(diameter/2)<0){ //untere linke ecke
+            v=Physik.Banden_Kuss(normal2,vX,vY);
+            vX=v[0];
+            vY=v[1];
+            currentX = currentX + 1;
+            currentY = currentY - 1;
+        }
     }
 }

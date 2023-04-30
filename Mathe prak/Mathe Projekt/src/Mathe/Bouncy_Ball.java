@@ -122,8 +122,8 @@ public class Bouncy_Ball extends Animation {
         private final double currentX_2=Konstanten.WINDOW_WIDTH-100;
         private final double currentY_1=Konstanten.WINDOW_HEIGHT/2;
         private final double currentY_2=Konstanten.WINDOW_HEIGHT/2;
-        private final double vX=300;
-        private final double vY=300;
+        private final double vX=200;
+        private final double vY=200;
         private final double diameter=50;
         private Ball k1;
         private Ball k2;
@@ -190,16 +190,16 @@ public class Bouncy_Ball extends Animation {
                 g2d.setStroke(new BasicStroke(5.0f)); //line width
 
                 g.setColor(Color.BLACK);
-                g.drawLine(originX + 100, originY, originX, originY + 100); //band oben links
+                g.drawLine(originX + 150, originY, originX, originY + 150); //band oben links
 
                 g.setColor(Color.BLACK);
-                g.drawLine(originX + 100, originY + height, originX, originY + height - 100); //band unten links
+                g.drawLine(originX + 150, originY + height, originX, originY + height - 150); //band unten links
 
                 g.setColor(Color.BLACK);
-                g.drawLine(originX + width - 100, originY, originX + width, originY + 100); //band oben rechts
+                g.drawLine(originX + width - 150, originY, originX + width, originY + 150); //band oben rechts
 
                 g.setColor(Color.BLACK);
-                g.drawLine(originX + width - 100, originY + height, originX + width, originY + height - 100); //band unten rechts
+                g.drawLine(originX + width - 150, originY + height, originX + width, originY + height - 150); //band unten rechts
         }
     }
 }
