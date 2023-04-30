@@ -61,28 +61,28 @@ public class Ball {
             currentY = currentY + 1;
         }
         if (-currentX-currentY+100+(diameter/2)>0){ // obere like ecke
-            v=Physik.Banden_Kuss(normal1, vX, vY);
+            v=Physik.Banden_Kuss(normal1, vX, vY,el);
             vX=v[0];
             vY=v[1];
             currentY = currentY + 1;
             currentX = currentX + 1;
         }
         if ((-currentX+width)-currentY+400-(diameter/2)<0){ // untere rechte ecke
-            v=Physik.Banden_Kuss(normal1, vX, vY);
+            v=Physik.Banden_Kuss(normal1, vX, vY,el);
             vX=v[0];
             vY=v[1];
             currentY = currentY - 1;
             currentX = currentX - 1;
         }
         if ((width-currentX)-(150-currentY)-(diameter/2)<0){ // obere rechte ecke
-            v=Physik.Banden_Kuss(normal2,vX,vY);
+            v=Physik.Banden_Kuss(normal2,vX,vY,el);
             vY=v[1];
             vX=v[0];
             currentX = currentX - 1;
             currentY = currentY + 1;
         }
         if (currentX-currentY+450-(diameter/2)<0){ //untere linke ecke
-            v=Physik.Banden_Kuss(normal2,vX,vY);
+            v=Physik.Banden_Kuss(normal2,vX,vY,el);
             vX=v[0];
             vY=v[1];
             currentX = currentX + 1;

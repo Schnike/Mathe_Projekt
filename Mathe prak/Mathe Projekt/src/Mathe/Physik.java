@@ -1,7 +1,7 @@
 package Mathe;
 
 public class Physik {
-    public static double[] Banden_Kuss(double[] n, double vx, double vy){
+    public static double[] Banden_Kuss(double[] n, double vx, double vy, double el){
         double v[]={vx, vy};
         double nn[]= {n[0]/(int)Math.sqrt(n[0]*n[0]+n[1]*n[1]),n[1]/(int)Math.sqrt(n[0]*n[0]+n[1]*n[1])};
         double vsenk[]=new double[2];
@@ -9,8 +9,8 @@ public class Physik {
         double vPar=((v[0]*nn[0])+(v[1]*nn[1]))/((nn[0]*n[0])+(nn[1]*nn[1]));
         vp[0]=vPar*nn[0];
         vp[1]=vPar*nn[1];
-        vsenk[0]=v[0]-(1*vp[0]);
-        vsenk[1]=v[1]-(1*vp[1]);
+        vsenk[0]=v[0]-(el*vp[0]);
+        vsenk[1]=v[1]-(el*vp[1]);
 
         double []w= {vsenk[0]-vp[0],vsenk[1]-vp[1]};
 

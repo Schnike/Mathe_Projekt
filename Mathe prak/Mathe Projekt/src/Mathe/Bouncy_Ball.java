@@ -11,8 +11,8 @@ public class Bouncy_Ball extends Animation {
     static JButton buttonStart = new JButton();
     static JButton buttonPause = new JButton();
     static JButton buttonReset = new JButton();
-    private static double eR;
-    public static double eB;
+    private static double eR=1;
+    public static double eB=1;
 
 
     @Override
@@ -77,22 +77,22 @@ public class Bouncy_Ball extends Animation {
 
         // set up second panel
         //ScrollBar für Roten Ball
-            JLabel el1 = new JLabel("Adjust elastic scaling red Ball:");
+            JLabel el1 = new JLabel("Adjust elastic scaling blue Ball:");
             JLabel el1_elasticScalingLabel = new JLabel("Current scaling :");
-            JLabel currentScaling_el1 = new JLabel("0.5");
+            JLabel currentScaling_el1 = new JLabel("1.0");
 
-            JScrollBar scrollBar_el1 = new JScrollBar(Adjustable.HORIZONTAL, 50, 10, 0, 110);
+            JScrollBar scrollBar_el1 = new JScrollBar(Adjustable.HORIZONTAL, 100, 10, 0, 110);
             scrollBar_el1.addAdjustmentListener(E1 -> {
                 double newScaling_el1 = (double) scrollBar_el1.getValue() / 100;
                 eR=newScaling_el1;
                 currentScaling_el1.setText(Double.toString(newScaling_el1));
             });
                 //ScrollBar für Blauen Ball
-                JLabel el2 = new JLabel("Adjust elastic scaling blue Ball:");
+                JLabel el2 = new JLabel("Adjust elastic scaling red Ball:");
                 JLabel el2_elasticScalingLabel = new JLabel("Current scaling :");
-                JLabel currentScaling_el2 = new JLabel("0.5");
+                JLabel currentScaling_el2 = new JLabel("1.0");
 
-                JScrollBar scrollBar_el2 = new JScrollBar(Adjustable.HORIZONTAL, 50, 10, 0, 110);
+                JScrollBar scrollBar_el2 = new JScrollBar(Adjustable.HORIZONTAL, 100, 10, 0, 110);
                 scrollBar_el2.addAdjustmentListener(E2 -> {
                     double newScaling_el2 = (double) scrollBar_el2.getValue() / 100;
                     eB=newScaling_el2;
