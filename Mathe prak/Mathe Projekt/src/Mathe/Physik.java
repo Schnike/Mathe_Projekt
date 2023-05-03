@@ -26,7 +26,6 @@ public class Physik {
         double bl=Math.sqrt(Math.pow(b_ein[0],2)+Math.pow(b_ein[1],2));
         double b[]={(1/bl)*b_ein[0],(1/bl)*b_ein[1]};
         if(bl <= k1.diameter/2 + k2.diameter/2){
-            System.out.println("moin");
             k2.vX=v1[0]-eB*b[0];
             k2.vY=v1[1]-eB*b[1];
             k1.vX=v2[0]+eR*b[0];
