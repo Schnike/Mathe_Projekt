@@ -125,14 +125,16 @@ public class Bouncy_Ball extends Animation {
         private final double vX=200;
         private final double vY=200;
         private final double diameter=50;
+        private final double mass1=1;
+        private final double mass2=1;
         private Ball k1;
         private Ball k2;
         private Ball s1;
         private Ball s2;
 
         public Bouncy_Ball_Panel(ApplicationTime thread) {
-            k1 = new Ball(currentX_1, currentY_1, diameter, vX, -vY); //blue
-            k2 = new Ball(currentX_2, currentY_2, diameter, -vX, -vY);//red
+            k1 = new Ball(currentX_1, currentY_1, diameter, vX, -vY, mass1); //blue
+            k2 = new Ball(currentX_2, currentY_2, diameter, -vX, -vY, mass2);//red
             s1 = new Ball(k1);
             s2 = new Ball(k2);
             System.out.println(s1.vX);
@@ -179,12 +181,12 @@ public class Bouncy_Ball extends Animation {
                 }
                 k1.draw(g,new Color(0f,0f,1f,0.5f));
                 k2.draw(g,new Color(1f,0f,0f,0.5f));
+                Physik.Ball_Collision(k1, k2, eR, eB);
+                Physik.Schwerpunkt_Position(k1, k2);
+                Physik.Schwerpunkt_Geschwindigkeit(k1, k2);
                 if(true==Control_Panel.Start){
                     k1.moveInArea(deltaTime,width,height,eR);
                     k2.moveInArea(deltaTime,width,height,eB);
-                    if(Physik.ball_treffen(currentX_1,currentY_1,50, currentX_2,currentY_2,50) == true){
-                        k1.vX = -k1.vX;
-                    }
                 }
 
                 g2d.setStroke(new BasicStroke(5.0f)); //line width

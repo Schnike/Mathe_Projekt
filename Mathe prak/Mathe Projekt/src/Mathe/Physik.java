@@ -1,7 +1,7 @@
 package Mathe;
 
 public class Physik {
-    public static double[] Banden_Kuss(double[] n, double vx, double vy, double el){
+    public static double[] Banden_Collision(double[] n, double vx, double vy, double el){
         double v[]={vx, vy};
         double nn[]= {n[0]/(int)Math.sqrt(n[0]*n[0]+n[1]*n[1]),n[1]/(int)Math.sqrt(n[0]*n[0]+n[1]*n[1])};
         double vsenk[]=new double[2];
@@ -16,22 +16,32 @@ public class Physik {
 
         return w;
     }
-    public static boolean ball_treffen (double X1,double Y1, double diameter_k1, double X2, double Y2, double diameter_k2){
 
-
-        //rechne vektor Z1->Z2 (anfang - ende -> Z2-Z1)
-        double XB = 0; //x unterschied
-        double YB = 0; //y unterschied
-        XB = X2 - X1;
-        YB = Y2 - Y1;
-
-        //rechne laenge vektor Z1->Z2
-        if(Math.sqrt(Math.pow(XB, 2)+Math.pow(YB, 2)) <= diameter_k1/2 + diameter_k2/2){
-            System.out.print("sheeeeeeeeeesh");
-            return true;
-
+    public static void Ball_Collision(Ball k1, Ball k2, double eR, double eB){
+        double ball1[]={k1.currentX, k1.currentY};
+        double v1[]={k1.vX,k1.vY};
+        double ball2[]={k2.currentX, k2.currentY};
+        double v2[]={k2.vX,k2.vY};
+        double b_ein[]={ball1[0]-ball2[0],ball1[1]-ball2[1]};// ball2 -> ball1
+        double bl=Math.sqrt(Math.pow(b_ein[0],2)+Math.pow(b_ein[1],2));
+        double b[]={(1/bl)*b_ein[0],(1/bl)*b_ein[1]};
+        if(bl <= k1.diameter/2 + k2.diameter/2){
+            System.out.println("moin");
+            k2.vX=v1[0]-eB*b[0];
+            k2.vY=v1[1]-eB*b[1];
+            k1.vX=v2[0]+eR*b[0];
+            k1.vY=v2[1]+eR*b[1];
         }
-        else return false;
+    }
+    public static double[] Schwerpunkt_Position(Ball k1, Ball k2){
+        double X[]={((k1.m*k1.currentX)+ (k2.m*k2.currentX))/(k1.m+k2.m),((k1.m*k1.currentY)+ (k2.m*k2.currentY))/(k1.m+k2.m)};
+        return X;
+    }
+    public static double[] Schwerpunkt_Geschwindigkeit(Ball k1, Ball k2){
+        double V[]={(1/(k1.m+k2.m))*(k1.m*k1.vX+k2.m*k2.vX),(1/(k1.m+k2.m))*(k1.m*k1.vY+k2.m*k2.vY)};
+        return V;
+    }
+    public static void cm(){
 
     }
 }
