@@ -11,6 +11,8 @@ public class Bouncy_Ball extends Animation {
     static JButton buttonStart = new JButton();
     static JButton buttonPause = new JButton();
     static JButton buttonReset = new JButton();
+    static JButton buttonExample1= new JButton();
+    static JButton buttonExample2= new JButton();
     private static double eR=1;
     public static double eB=1;
 
@@ -70,10 +72,23 @@ public class Bouncy_Ball extends Animation {
         buttonReset.addActionListener(new Control_Panel(buttonReset, controlFrame, thread));
         buttonReset.setText("Reset");
 
+        buttonExample1 = new JButton();
+        buttonExample1.setBackground(Color.WHITE);
+        buttonExample1.addActionListener(new Control_Panel(buttonExample1, controlFrame, thread));
+        buttonExample1.setText("Exp1");
+
+        buttonExample2 = new JButton();
+        buttonExample2.setBackground(Color.WHITE);
+        buttonExample2.addActionListener(new Control_Panel(buttonExample2, controlFrame, thread));
+        buttonExample2.setText("Exp2");
+
+
         panel.add(buttonStart);
         panel.add(buttonReset);
         panel.add(buttonPause);
         panel.add(buttonContinue);
+        panel.add(buttonExample1);
+        panel.add(buttonExample2);
 
         // set up second panel
         //ScrollBar für Roten Ball
@@ -118,7 +133,7 @@ public class Bouncy_Ball extends Animation {
         // panel has a single time tracking thread associated with it
         private final ApplicationTime t;
         private double time;
-        private final double currentX_1=50;
+        private final double currentX_1=100;
         private final double currentX_2=Konstanten.WINDOW_WIDTH-100;
         private final double currentY_1=Konstanten.WINDOW_HEIGHT/2;
         private final double currentY_2=Konstanten.WINDOW_HEIGHT/2;
@@ -133,8 +148,8 @@ public class Bouncy_Ball extends Animation {
         private Ball s2;
 
         public Bouncy_Ball_Panel(ApplicationTime thread) {
-            k1 = new Ball(currentX_1, currentY_1, diameter, vX, -vY, mass1); //blue
-            k2 = new Ball(currentX_2, currentY_2, diameter, -vX, -vY, mass2);//red
+            k1 = new Ball(currentX_1, currentY_1, diameter, vX, vY, mass1); //blue
+            k2 = new Ball(currentX_2, currentY_2 ,diameter, -vX, vY, mass2);//red
             s1 = new Ball(k1);
             s2 = new Ball(k2);
             System.out.println(s1.vX);
@@ -178,6 +193,28 @@ public class Bouncy_Ball extends Animation {
                     Control_Panel.Reset=false;
                     k1=new Ball(s1);
                     k2=new Ball(s2);
+                }
+                if(Control_Panel.exp1==true){
+                    Control_Panel.exp1=false;
+                    k1.vY=0;
+                    k1.vX=200;
+                    k1.currentX=200;
+                    k1.currentY=height/2;
+                    k2.currentX=width/2;
+                    k2.currentY=500;
+                    k2.vX=0;
+                    k2.vY=-200;
+                }
+                if(Control_Panel.exp2==true){
+                    Control_Panel.exp2=false;
+                    k1.vY=0;
+                    k1.vX=200;
+                    k1.currentX=200;
+                    k1.currentY=height/2;
+                    k2.currentX=width-200;
+                    k2.currentY=height/2-10;
+                    k2.vX=-200;
+                    k2.vY=0;
                 }
                 k1.draw(g,new Color(0f,0f,1f,0.5f));
                 k2.draw(g,new Color(1f,0f,0f,0.5f));
