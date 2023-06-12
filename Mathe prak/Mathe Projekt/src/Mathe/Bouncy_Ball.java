@@ -13,8 +13,10 @@ public class Bouncy_Ball extends Animation {
     static JButton buttonReset = new JButton();
     static JButton buttonExample1= new JButton();
     static JButton buttonExample2= new JButton();
-    private static double eR=1;
+    public static double eR=1;
     public static double eB=1;
+
+
 
 
     @Override
@@ -32,6 +34,7 @@ public class Bouncy_Ball extends Animation {
 
         frames.add(frame);
         createControlFrame(applicationTimeThread);
+        Wertetabelle(applicationTimeThread);
         return frames;
     }
 
@@ -43,15 +46,12 @@ public class Bouncy_Ball extends Animation {
 
         // Add a JPanel as the new drawing surface
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(2, 4, 5, 0)); // manages the layout of elements in the panel (buttons, labels,
+        panel.setLayout(new GridLayout(2, 3, 5, 0)); // manages the layout of elements in the panel (buttons, labels,
         // other panels, etc.)
         JPanel scrollPanel = new JPanel();
         scrollPanel.setLayout(new GridLayout(2, 2, 5, 5));
 
-        JPanel WertePanel = new JPanel();
-        WertePanel.setLayout(new GridLayout(2, 2, 5, 5));
-        JLabel w = new JLabel("bx:  ");
-        WertePanel.add(w);
+
 
         controlFrame.add(panel);
         controlFrame.add(scrollPanel);
@@ -120,6 +120,7 @@ public class Bouncy_Ball extends Animation {
                     currentScaling_el2.setText(Double.toString(newScaling_el2));
         });
 
+
         scrollPanel.add(el1);
         scrollPanel.add(scrollBar_el1);
 
@@ -133,7 +134,27 @@ public class Bouncy_Ball extends Animation {
         scrollPanel.add(el2_elasticScalingLabel);
         scrollPanel.add(currentScaling_el2);
         controlFrame.pack();
-
+    }
+    private static void Wertetabelle(ApplicationTime thread){
+        JFrame Wertetabelle = new JFrame("Wertetabelle");
+        Wertetabelle.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Wertetabelle.setLayout(new GridLayout(1, 1, 10, 0)); // manages the layout of panels in the frame
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(11, 2, 10, 0));
+        String[][] data = new String[][]{
+                {"a", "b", "c", "d"},
+                {"e", "f", "g", "h"},
+                {"i", "j", "k", "l"}
+        };
+        String[] title = new String[]{
+                "A", "B", "C", "D"
+        };
+        Wertetabelle.add(panel);
+        Wertetabelle.setVisible(true);
+        JTable tabelle = new JTable(data,title);
+        //table.data(Bouncy_Ball_Panel.k1,Bouncy_Ball_Panel.k2)
+        panel.add(tabelle);
+        Wertetabelle.pack();
     }
 
     class Bouncy_Ball_Panel extends JPanel {
@@ -151,8 +172,8 @@ public class Bouncy_Ball extends Animation {
         private final double offset=diameter/2;
         private final double mass1=1;
         private final double mass2=1;
-        private Ball k1;
-        private Ball k2;
+        public static Ball k1;
+        public static Ball k2;
         private Ball s1;
         private Ball s2;
 
