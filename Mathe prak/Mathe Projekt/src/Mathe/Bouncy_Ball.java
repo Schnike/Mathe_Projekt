@@ -39,7 +39,7 @@ public class Bouncy_Ball extends Animation {
         // Create a new frame
         JFrame controlFrame = new JFrame("Mathematik und Simulation");
         controlFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        controlFrame.setLayout(new GridLayout(2, 2, 10, 0)); // manages the layout of panels in the frame
+        controlFrame.setLayout(new GridLayout(3, 2, 10, 0)); // manages the layout of panels in the frame
 
         // Add a JPanel as the new drawing surface
         JPanel panel = new JPanel();
@@ -47,6 +47,12 @@ public class Bouncy_Ball extends Animation {
         // other panels, etc.)
         JPanel scrollPanel = new JPanel();
         scrollPanel.setLayout(new GridLayout(2, 2, 5, 5));
+
+        JPanel WertePanel = new JPanel();
+        WertePanel.setLayout(new GridLayout(2, 2, 5, 5));
+        JLabel w = new JLabel("bx:  ");
+        WertePanel.add(w);
+
         controlFrame.add(panel);
         controlFrame.add(scrollPanel);
         controlFrame.setVisible(true);
@@ -113,6 +119,7 @@ public class Bouncy_Ball extends Animation {
                     eB=newScaling_el2;
                     currentScaling_el2.setText(Double.toString(newScaling_el2));
         });
+
         scrollPanel.add(el1);
         scrollPanel.add(scrollBar_el1);
 
@@ -126,6 +133,7 @@ public class Bouncy_Ball extends Animation {
         scrollPanel.add(el2_elasticScalingLabel);
         scrollPanel.add(currentScaling_el2);
         controlFrame.pack();
+
     }
 
     class Bouncy_Ball_Panel extends JPanel {
@@ -140,6 +148,7 @@ public class Bouncy_Ball extends Animation {
         private final double vX=200;
         private final double vY=200;
         private final double diameter=50;
+        private final double offset=diameter/2;
         private final double mass1=1;
         private final double mass2=1;
         private Ball k1;
@@ -148,12 +157,10 @@ public class Bouncy_Ball extends Animation {
         private Ball s2;
 
         public Bouncy_Ball_Panel(ApplicationTime thread) {
-            k1 = new Ball(currentX_1, currentY_1, diameter, vX, vY, mass1); //blue
-            k2 = new Ball(currentX_2, currentY_2 ,diameter, -vX, vY, mass2);//red
+            k1 = new Ball(currentX_1, currentY_1, diameter, vX, vY, mass1,eR); //blue
+            k2 = new Ball(currentX_2, currentY_2 ,diameter, -vX, vY, mass2,eB);//red
             s1 = new Ball(k1);
             s2 = new Ball(k2);
-            System.out.println(s1.vX);
-            System.out.println("Test");
             this.t = thread;
         }
 
@@ -187,8 +194,8 @@ public class Bouncy_Ball extends Animation {
                 double deltaTime = time - lastFrameTime;
                 lastFrameTime = time;
 
-                // bounce might change x coordinate
-
+                k1.el=eR;
+                k2.el=eB;
                 if(Control_Panel.Reset==true){
                     Control_Panel.Reset=false;
                     k1=new Ball(s1);
@@ -212,18 +219,20 @@ public class Bouncy_Ball extends Animation {
                     k1.currentX=200;
                     k1.currentY=height/2;
                     k2.currentX=width-200;
-                    k2.currentY=height/2-10;
+                    k2.currentY=height/2-25;
                     k2.vX=-200;
                     k2.vY=0;
                 }
                 k1.draw(g,new Color(0f,0f,1f,0.5f));
                 k2.draw(g,new Color(1f,0f,0f,0.5f));
-                Physik.Ball_Collision(k1, k2, eR, eB);
-                Physik.Schwerpunkt_Position(k1, k2);
-                Physik.Schwerpunkt_Geschwindigkeit(k1, k2);
+                double[] swp=Physik.Schwerpunkt_Position(k1, k2);
+                double[]swg=Physik.Schwerpunkt_Geschwindigkeit(k1, k2);
                 if(true==Control_Panel.Start){
-                    k1.moveInArea(deltaTime,width,height,eR);
-                    k2.moveInArea(deltaTime,width,height,eB);
+                    k1.moveInArea(deltaTime,width,height);
+                    k2.moveInArea(deltaTime,width,height);
+                }
+                if(k1.diameter/2+k2.diameter/2>=Physik.dis(k1,k2)){
+                    Physik.finalcollisionresponds(k1, k2);
                 }
 
                 g2d.setStroke(new BasicStroke(5.0f)); //line width
@@ -239,6 +248,11 @@ public class Bouncy_Ball extends Animation {
 
                 g.setColor(Color.BLACK);
                 g.drawLine(originX + width - 150, originY + height, originX + width, originY + height - 150); //band unten rechts
+                g2d.setStroke(new BasicStroke(2.0f));
+                g.setColor(Color.black);
+                g.drawLine((int)k1.currentX+(int)offset,(int)k1.currentY+(int)offset ,(int)k2.currentX+(int)offset,(int)k2.currentY+(int)offset);
+                g.setColor(Color.green);
+                g.fillOval((int)swp[0]+(int)diameter/4,(int)swp[1]+(int)diameter/4,(int)diameter/2,(int)diameter/2);
         }
     }
 }

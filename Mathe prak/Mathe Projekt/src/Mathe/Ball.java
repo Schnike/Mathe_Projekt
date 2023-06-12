@@ -1,9 +1,6 @@
 package Mathe;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 
 public class Ball {
     double currentX;
@@ -16,14 +13,16 @@ public class Ball {
     double normal1[]={1,1};
     double normal2[]={-1,1};
     double v[];
+    double el;
 
-    public Ball(double currentX, double currentY, double diameter, double vX, double vY, double m) {
+    public Ball(double currentX, double currentY, double diameter, double vX, double vY, double m, double el) {
         this.currentX=currentX;
         this.currentY=currentY;
         this.diameter=diameter;
         this.vX=vX;
         this.vY=vY;
         this.m=m;
+        this.el=el;
     }
     public Ball(Ball k1)
     {
@@ -32,15 +31,17 @@ public class Ball {
         this.diameter = k1.diameter;
         this.vX = k1.vX;
         this.vY = k1.vY;
+        this.m=k1.m;
+        this.el=k1.el;
     }
     public void draw(Graphics g,Color c) {
         Graphics2D g2=(Graphics2D)g;
         g2.setColor(c);
         g2.fillOval( (int)(currentX), (int)(currentY), (int)diameter, (int)diameter);
-        //g2.setColor(Color.black);
-        //g2.drawLine((int)currentX,(int)currentY ,(int)currentX+(int)(vX),(int)currentY+(int)(vY));
+        //g2.setStroke(new BasicStroke(1.0f));
+        //g2.drawLine((int)currentX+(int)diameter/2,(int)currentY+(int)diameter/2 ,(int)currentX+(int)(vX)/2,(int)currentY+(int)(vY)/2);
     }
-    public void moveInArea(double deltaTime, double width, double height,double el){
+    public void moveInArea(double deltaTime, double width, double height){
         currentX = currentX + (vX * deltaTime);
         currentY = currentY + (vY * deltaTime);
 
@@ -95,4 +96,6 @@ public class Ball {
             currentY = currentY - 3;
         }
     }
+
+
 }
