@@ -134,29 +134,4 @@ public class Physik {
         double distance= Math.sqrt((values[0]*values[0])+(values[1]*values[1]));
         return distance;
     }
-
-
-    public static String Wert(Ball k1, Ball k2){
-        double ustrich[]=Physik.Ball_Collision(Physik.bvec(k1,k2),k1, k2);
-        double V[]=Physik.cmv(k1, k2);
-        int v[]= new int[4];
-        v[0]=(int) k1.vX;
-        v[1]=(int) k1.vY;
-        v[2]=(int) k2.vX;
-        v[3]=(int) k2.vY;
-        double u[]=Physik.cms(k1, k2);
-        String w="bx:  "+(int)Physik.bvec(k1,k2)[0]+ "  by:  "+(int)Physik.bvec(k1,k2)[1]+"   \n\n"
-                +"|b|:  "+(int)Physik.dis(k1, k2)+"\n\n"+
-                "u1:  "+(int)u[0]+"    u2:  "+(int)u[2]+" \n"+
-                "       "+(int)u[1]+"           "+(int)u[3] +"\n\n"+
-                "u1´:  "+(int)ustrich[0]+"    u2´:  "+(int)ustrich[2]+" \n"+
-                "        "+(int)ustrich[1]+"             "+(int)ustrich[3] +"\n\n"+
-                "v1:  "+(int)v[0]+"    v2:  "+(int)v[2]+" \n"+
-                "      "+(int)v[1]+"            "+(int)v[3] +"\n\n"+
-                "v1´:  "+(int)(ustrich[0]+V[0])+"    v2´:  "+(int)(ustrich[2]+V[0])+" \n"+
-                "       "+(int)(ustrich[1]+V[1])+"           "+(int)(ustrich[3]+V[1]) +"\n\n"+
-                "V:  "+((int)V[0])+"\n"+
-                "    "+((int)V[1]);
-    return w;
-    }
 }

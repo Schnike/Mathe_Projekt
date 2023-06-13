@@ -1,7 +1,28 @@
 package Mathe;
 
-public class table {
+import utils.ApplicationTime;
 
+import javax.swing.*;
+import java.awt.*;
+
+public class table extends JPanel {
+    private final ApplicationTime t;
+    private double time;
+    public static JTable tabelle = new JTable(table.data(Bouncy_Ball.Bouncy_Ball_Panel.k1, Bouncy_Ball.Bouncy_Ball_Panel.k2),table.title());
+    private static JPanel panel = new JPanel();
+    public table(ApplicationTime thread){
+        this.t = thread;
+    }
+    static void Wertetabelle(ApplicationTime thread){
+        JFrame Wertetabelle = new JFrame("Wertetabelle");
+        Wertetabelle.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Wertetabelle.setLayout(new GridLayout(1, 1, 10, 0)); // manages the layout of panels in the frame
+        panel.setLayout(new GridLayout(1, 2, 10, 0));
+        Wertetabelle.add(panel);
+        Wertetabelle.setVisible(true);
+        panel.add(tabelle);
+        Wertetabelle.pack();
+    }
     public static String[][] data(Ball k1, Ball k2){
         double ustrich[]=Physik.Ball_Collision(Physik.bvec(k1,k2),k1, k2);
         double V[]=Physik.cmv(k1, k2);
@@ -25,6 +46,18 @@ public class table {
                 {"V:  "+((int)V[0]), ""+((int)V[1])},
         };
         return data;
-
+    }
+    public static String [] title(){
+        String[] title = new String[]{
+                "A", "B"
+        };
+        return title;
+    }
+    @Override
+    protected void paintComponent(Graphics g){
+        super.paintComponent(g);
+        table.data(Bouncy_Ball.Bouncy_Ball_Panel.k1, Bouncy_Ball.Bouncy_Ball_Panel.k2);
+        tabelle = new JTable(table.data(Bouncy_Ball.Bouncy_Ball_Panel.k1, Bouncy_Ball.Bouncy_Ball_Panel.k2),table.title());
+        panel.add(tabelle);
     }
 }

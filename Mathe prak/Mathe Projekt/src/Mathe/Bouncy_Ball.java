@@ -34,7 +34,7 @@ public class Bouncy_Ball extends Animation {
 
         frames.add(frame);
         createControlFrame(applicationTimeThread);
-        Wertetabelle(applicationTimeThread);
+        table.Wertetabelle(applicationTimeThread);
         return frames;
     }
 
@@ -135,27 +135,7 @@ public class Bouncy_Ball extends Animation {
         scrollPanel.add(currentScaling_el2);
         controlFrame.pack();
     }
-    private static void Wertetabelle(ApplicationTime thread){
-        JFrame Wertetabelle = new JFrame("Wertetabelle");
-        Wertetabelle.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Wertetabelle.setLayout(new GridLayout(1, 1, 10, 0)); // manages the layout of panels in the frame
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(11, 2, 10, 0));
-        String[][] data = new String[][]{
-                {"a", "b", "c", "d"},
-                {"e", "f", "g", "h"},
-                {"i", "j", "k", "l"}
-        };
-        String[] title = new String[]{
-                "A", "B", "C", "D"
-        };
-        Wertetabelle.add(panel);
-        Wertetabelle.setVisible(true);
-        JTable tabelle = new JTable(data,title);
-        //table.data(Bouncy_Ball_Panel.k1,Bouncy_Ball_Panel.k2)
-        panel.add(tabelle);
-        Wertetabelle.pack();
-    }
+
 
     class Bouncy_Ball_Panel extends JPanel {
 
@@ -255,7 +235,6 @@ public class Bouncy_Ball extends Animation {
                 if(k1.diameter/2+k2.diameter/2>=Physik.dis(k1,k2)){
                     Physik.finalcollisionresponds(k1, k2);
                 }
-
                 g2d.setStroke(new BasicStroke(5.0f)); //line width
 
                 g.setColor(Color.BLACK);
@@ -275,5 +254,6 @@ public class Bouncy_Ball extends Animation {
                 g.setColor(Color.green);
                 g.fillOval((int)swp[0]+(int)diameter/4,(int)swp[1]+(int)diameter/4,(int)diameter/2,(int)diameter/2);
         }
+
     }
 }
