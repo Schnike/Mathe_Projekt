@@ -18,7 +18,7 @@ public class Physik {
         return w;
     }
 
-    public static double[] Ball_Collision(double[] n,Ball k1, Ball k2){
+    public static double[] Ball_Collision(double[] n,Ball k1, Ball k2, double el){
         double nn[]= {n[0]/Math.sqrt(n[0]*n[0]+n[1]*n[1]),n[1]/Math.sqrt(n[0]*n[0]+n[1]*n[1])};
         double v[]= cms(k1, k2);
         double usenk[]=new double[4];
@@ -28,8 +28,8 @@ public class Physik {
         upar[0]=u1par*nn[0];
         upar[1]=u1par*nn[1];
 
-        usenk[0]=v[0]-(k1.el*upar[0]);
-        usenk[1]=v[1]-(k2.el*upar[1]);
+        usenk[0]=v[0]-(el*upar[0]);
+        usenk[1]=v[1]-(el*upar[1]);
 
         double u2par=((v[2]*nn[0])+(v[3]*nn[1]))/((nn[0]*nn[0])+(nn[1]*nn[1]));  //u2
         upar[2]=u2par*nn[0];
@@ -109,9 +109,9 @@ public class Physik {
 
     }
 
-    public static void finalcollisionresponds(Ball k1,Ball k2){
+    public static void finalcollisionresponds(Ball k1,Ball k2, double el){
         double V[]=Physik.cmv(k1, k2);
-        double u[]=Physik.Ball_Collision(Physik.bvec(k1,k2),k1, k2);
+        double u[]=Physik.Ball_Collision(Physik.bvec(k1,k2),k1, k2, el);
         double par[]=Physik.par(Physik.bvec(k1,k2), k1, k2);
 
 

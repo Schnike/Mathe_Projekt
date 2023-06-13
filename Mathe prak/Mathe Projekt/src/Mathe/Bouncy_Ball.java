@@ -13,8 +13,8 @@ public class Bouncy_Ball extends Animation {
     static JButton buttonReset = new JButton();
     static JButton buttonExample1= new JButton();
     static JButton buttonExample2= new JButton();
-    public static double eR=1;
-    public static double eB=1;
+    public static double el=1;
+
 
 
 
@@ -34,7 +34,6 @@ public class Bouncy_Ball extends Animation {
 
         frames.add(frame);
         createControlFrame(applicationTimeThread);
-        table.Wertetabelle(applicationTimeThread);
         return frames;
     }
 
@@ -98,27 +97,17 @@ public class Bouncy_Ball extends Animation {
 
         // set up second panel
         //ScrollBar für Roten Ball
-            JLabel el1 = new JLabel("Adjust elastic scaling blue Ball:");
+            JLabel el1 = new JLabel("Adjust elastic scaling:");
             JLabel el1_elasticScalingLabel = new JLabel("Current scaling :");
             JLabel currentScaling_el1 = new JLabel("1.0");
 
             JScrollBar scrollBar_el1 = new JScrollBar(Adjustable.HORIZONTAL, 100, 10, 0, 110);
             scrollBar_el1.addAdjustmentListener(E1 -> {
                 double newScaling_el1 = (double) scrollBar_el1.getValue() / 100;
-                eR=newScaling_el1;
+                el=newScaling_el1;
                 currentScaling_el1.setText(Double.toString(newScaling_el1));
             });
-                //ScrollBar für Blauen Ball
-                JLabel el2 = new JLabel("Adjust elastic scaling red Ball:");
-                JLabel el2_elasticScalingLabel = new JLabel("Current scaling :");
-                JLabel currentScaling_el2 = new JLabel("1.0");
 
-                JScrollBar scrollBar_el2 = new JScrollBar(Adjustable.HORIZONTAL, 100, 10, 0, 110);
-                scrollBar_el2.addAdjustmentListener(E2 -> {
-                    double newScaling_el2 = (double) scrollBar_el2.getValue() / 100;
-                    eB=newScaling_el2;
-                    currentScaling_el2.setText(Double.toString(newScaling_el2));
-        });
 
 
         scrollPanel.add(el1);
@@ -126,13 +115,6 @@ public class Bouncy_Ball extends Animation {
 
         scrollPanel.add(el1_elasticScalingLabel);
         scrollPanel.add(currentScaling_el1);
-        controlFrame.pack();
-
-        scrollPanel.add(el2);
-        scrollPanel.add(scrollBar_el2);
-
-        scrollPanel.add(el2_elasticScalingLabel);
-        scrollPanel.add(currentScaling_el2);
         controlFrame.pack();
     }
 
@@ -158,8 +140,8 @@ public class Bouncy_Ball extends Animation {
         private Ball s2;
 
         public Bouncy_Ball_Panel(ApplicationTime thread) {
-            k1 = new Ball(currentX_1, currentY_1, diameter, vX, vY, mass1,eR); //blue
-            k2 = new Ball(currentX_2, currentY_2 ,diameter, -vX, vY, mass2,eB);//red
+            k1 = new Ball(currentX_1, currentY_1, diameter, vX, vY, mass1,el); //blue
+            k2 = new Ball(currentX_2, currentY_2 ,diameter, -vX, vY, mass2,el);//red
             s1 = new Ball(k1);
             s2 = new Ball(k2);
             this.t = thread;
@@ -195,8 +177,8 @@ public class Bouncy_Ball extends Animation {
                 double deltaTime = time - lastFrameTime;
                 lastFrameTime = time;
 
-                k1.el=eR;
-                k2.el=eB;
+                k1.el=el;
+                k2.el=el;
                 if(Control_Panel.Reset==true){
                     Control_Panel.Reset=false;
                     k1=new Ball(s1);
@@ -218,10 +200,10 @@ public class Bouncy_Ball extends Animation {
                     k1.vY=0;
                     k1.vX=200;
                     k1.currentX=200;
-                    k1.currentY=height/2;
+                    k1.currentY=height/2-30;
                     k2.currentX=width-200;
-                    k2.currentY=height/2-25;
-                    k2.vX=-200;
+                    k2.currentY=height/2;
+                    k2.vX=0;
                     k2.vY=0;
                 }
                 k1.draw(g,new Color(0f,0f,1f,0.5f));
@@ -233,7 +215,7 @@ public class Bouncy_Ball extends Animation {
                     k2.moveInArea(deltaTime,width,height);
                 }
                 if(k1.diameter/2+k2.diameter/2>=Physik.dis(k1,k2)){
-                    Physik.finalcollisionresponds(k1, k2);
+                    Physik.finalcollisionresponds(k1, k2, el);
                 }
                 g2d.setStroke(new BasicStroke(5.0f)); //line width
 
@@ -253,6 +235,39 @@ public class Bouncy_Ball extends Animation {
                 g.drawLine((int)k1.currentX+(int)offset,(int)k1.currentY+(int)offset ,(int)k2.currentX+(int)offset,(int)k2.currentY+(int)offset);
                 g.setColor(Color.green);
                 g.fillOval((int)swp[0]+(int)diameter/4,(int)swp[1]+(int)diameter/4,(int)diameter/2,(int)diameter/2);
+                //System.out.println("hallo")
+                double ustrich[]=Physik.Ball_Collision(Physik.bvec(k1,k2),k1, k2,el);
+                double V[]=Physik.cmv(k1, k2);
+                int v[]= new int[4];
+                v[0]=(int) k1.vX;
+                v[1]=(int) k1.vY;
+                v[2]=(int) k2.vX;
+                v[3]=(int) k2.vY;
+                double u[]=Physik.cms(k1, k2);
+
+                String a="bx:     ["+(int)Physik.bvec(k1,k2)[0]+ ","+(int)Physik.bvec(k1,k2)[1]+"]";
+                String b ="|b|:    "+(int)Physik.dis(k1, k2);
+                String c ="u1_R:  ["+(int)u[0]+ ","+(int)u[1]+"]";
+                String d ="u2_B:  ["+(int)u[2]+ ","+(int)u[3]+"]";
+                String e ="u1´_R: ["+(int)ustrich[0]+","+(int)ustrich[1]+"]";
+                String f ="u2´_B: ["+(int)ustrich[2]+","+(int)ustrich[3]+"]";
+                String h ="v1_R:  ["+(int)v[0]+","+(int)v[1]+"]";
+                String i ="v2_B:  ["+(int)v[2]+ ","+(int)v[3]+"]";
+                String j ="v1´:R: ["+(int)(ustrich[0]+V[0])+","+(int)(ustrich[1]+V[1])+"]";
+                String k ="v2´_B: ["+(int)(ustrich[2]+V[0])+ ","+(int)(ustrich[3]+V[1])+"]";
+                String l ="V:     ["+((int)V[0])+","+((int)V[1])+"]";
+                    g.setColor(Color.black);
+                    g.drawString(a,10,height/3);
+                    g.drawString(b,10,height/3+15);
+                    g.drawString(c,10,height/3+30);
+                    g.drawString(d,10,height/3+45);
+                    g.drawString(e,10,height/3+60);
+                    g.drawString(f,10,height/3+75);
+                    g.drawString(h,10,height/3+90);
+                    g.drawString(i,10,height/3+105);
+                    g.drawString(j,10,height/3+120);
+                    g.drawString(k,10,height/3+135);
+                    g.drawString(l,10,height/3+150);
         }
 
     }
