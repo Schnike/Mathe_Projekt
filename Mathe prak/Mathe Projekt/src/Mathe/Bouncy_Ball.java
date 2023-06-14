@@ -128,9 +128,9 @@ public class Bouncy_Ball extends Animation {
         private static final double currentX_2=Konstanten.WINDOW_WIDTH-100;
         private static final double currentY_1=Konstanten.WINDOW_HEIGHT/2;
         private static final double currentY_2=Konstanten.WINDOW_HEIGHT/2;
-        private static final double vX=200;
-        private static final double vY=200;
-        private static final double diameter=50;
+        private static final double vX=50;
+        private static final double vY=50;
+        private static final double diameter=20;
         private final double offset=diameter/2;
         private static final double mass1=1;
         private static final double mass2=1;
@@ -218,21 +218,21 @@ public class Bouncy_Ball extends Animation {
                 if(Control_Panel.exp1==true){
                     Control_Panel.exp1=false;
                     k1.vY=0;
-                    k1.vX=200;
-                    k1.currentX=200;
+                    k1.vX=30;
+                    k1.currentX=width/2-110;
                     k1.currentY=height/2;
                     k2.currentX=width/2;
-                    k2.currentY=500;
+                    k2.currentY=height/2+110;
                     k2.vX=0;
-                    k2.vY=-200;
+                    k2.vY=-30;
                 }
                 if(Control_Panel.exp2==true){
                     Control_Panel.exp2=false;
                     k1.vY=0;
-                    k1.vX=200;
-                    k1.currentX=200;
-                    k1.currentY=height/2-30;
-                    k2.currentX=width-200;
+                    k1.vX=30;
+                    k1.currentX=width/2-140;
+                    k1.currentY=height/2-10;
+                    k2.currentX=width/2;
                     k2.currentY=height/2;
                     k2.vX=0;
                     k2.vY=0;
