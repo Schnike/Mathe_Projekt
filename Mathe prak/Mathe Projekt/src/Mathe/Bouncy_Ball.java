@@ -41,7 +41,7 @@ public class Bouncy_Ball extends Animation {
         // Create a new frame
         JFrame controlFrame = new JFrame("Mathematik und Simulation");
         controlFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        controlFrame.setLayout(new GridLayout(3, 2, 10, 0)); // manages the layout of panels in the frame
+        controlFrame.setLayout(new GridLayout(2, 2, 10, 0)); // manages the layout of panels in the frame
 
         // Add a JPanel as the new drawing surface
         JPanel panel = new JPanel();
@@ -130,7 +130,7 @@ public class Bouncy_Ball extends Animation {
         private static final double currentY_2=Konstanten.WINDOW_HEIGHT/2;
         private static final double vX=50;
         private static final double vY=50;
-        private static final double diameter=20;
+        private static final double diameter=40;
         private final double offset=diameter/2;
         private static final double mass1=1;
         private static final double mass2=1;

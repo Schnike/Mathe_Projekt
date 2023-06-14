@@ -20,27 +20,27 @@ public class Physik {
 
     public static double[] Ball_Collision(double[] n,Ball k1, Ball k2, double el){
         double nn[]= {n[0]/Math.sqrt(n[0]*n[0]+n[1]*n[1]),n[1]/Math.sqrt(n[0]*n[0]+n[1]*n[1])};
-        double v[]= cms(k1, k2);
+        double u[]= cms(k1, k2);
         double usenk[]=new double[4];
         double upar[] = new double[4];
 
-        double u1par=((v[0]*nn[0])+(v[1]*nn[1]))/((nn[0]*nn[0])+(nn[1]*nn[1]));  //u1
+        double u1par=((u[0]*nn[0])+(u[1]*nn[1]))/((nn[0]*nn[0])+(nn[1]*nn[1]));  //u1
         upar[0]=u1par*nn[0];
         upar[1]=u1par*nn[1];
 
-        usenk[0]=v[0]-(el*upar[0]);
-        usenk[1]=v[1]-(el*upar[1]);
+        usenk[0]=u[0]-(el*upar[0]);
+        usenk[1]=u[1]-(el*upar[1]);
 
-        double u2par=((v[2]*nn[0])+(v[3]*nn[1]))/((nn[0]*nn[0])+(nn[1]*nn[1]));  //u2
+        double u2par=((u[2]*nn[0])+(u[3]*nn[1]))/((nn[0]*nn[0])+(nn[1]*nn[1]));  //u2
         upar[2]=u2par*nn[0];
         upar[3]=u2par*nn[1];
 
-        usenk[2]=v[2]-(1*upar[2]);
-        usenk[3]=v[3]-(1*upar[3]);
+        usenk[2]=u[2]-(1*upar[2]);
+        usenk[3]=u[3]-(1*upar[3]);
 
-        double []u= {usenk[0]-upar[0],usenk[1]-upar[1],     //u1´
+        double []U= {usenk[0]-upar[0],usenk[1]-upar[1],     //u1´
                 usenk[2]-upar[2],usenk[3]-upar[3]};		//u2´
-        return u;
+        return U;
     }
     public static double[] Schwerpunkt_Position(Ball k1, Ball k2){
         double X[]={((k1.m*k1.currentX)+ (k2.m*k2.currentX))/(k1.m+k2.m),((k1.m*k1.currentY)+ (k2.m*k2.currentY))/(k1.m+k2.m)};
