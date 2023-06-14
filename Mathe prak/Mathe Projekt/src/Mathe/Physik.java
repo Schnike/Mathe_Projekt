@@ -50,18 +50,6 @@ public class Physik {
         double V[]={(1/(k1.m+k2.m))*(k1.m*k1.vX+k2.m*k2.vX),(1/(k1.m+k2.m))*(k1.m*k1.vY+k2.m*k2.vY)};
         return V;
     }
-    public static double[] cm(Ball k1, Ball k2){
-        double[] u= new double[2];
-        u[0]=((k1.m*k1.currentX)+(k2.m*k2.currentX))/(k1.m+k2.m);
-        u[1]=((k1.m*k1.currentY)+(k2.m*k2.currentY))/(k1.m+k2.m);
-        return u;
-    }
-    public static double[] cmv(Ball k1,Ball k2) {
-        double[] v= new double[2];
-        v[0]=(1/(k1.m+k2.m))*(k1.m*k1.vX+k2.m*k2.vX);
-        v[1]=(1/(k1.m+k2.m))*(k1.m*k1.vY+k2.m*k2.vY);
-        return v;
-    }
 
     public static double []cms(Ball k1,Ball k2){
 
@@ -110,7 +98,7 @@ public class Physik {
     }
 
     public static void finalcollisionresponds(Ball k1,Ball k2, double el){
-        double V[]=Physik.cmv(k1, k2);
+        double V[]=Physik.Schwerpunkt_Geschwindigkeit(k1, k2);
         double u[]=Physik.Ball_Collision(Physik.bvec(k1,k2),k1, k2, el);
         double par[]=Physik.par(Physik.bvec(k1,k2), k1, k2);
 

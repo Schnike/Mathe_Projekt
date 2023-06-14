@@ -124,33 +124,54 @@ public class Bouncy_Ball extends Animation {
         // panel has a single time tracking thread associated with it
         private final ApplicationTime t;
         private double time;
-        private final double currentX_1=100;
-        private final double currentX_2=Konstanten.WINDOW_WIDTH-100;
-        private final double currentY_1=Konstanten.WINDOW_HEIGHT/2;
-        private final double currentY_2=Konstanten.WINDOW_HEIGHT/2;
-        private final double vX=200;
-        private final double vY=200;
-        private final double diameter=50;
+        private static final double currentX_1=100;
+        private static final double currentX_2=Konstanten.WINDOW_WIDTH-100;
+        private static final double currentY_1=Konstanten.WINDOW_HEIGHT/2;
+        private static final double currentY_2=Konstanten.WINDOW_HEIGHT/2;
+        private static final double vX=200;
+        private static final double vY=200;
+        private static final double diameter=50;
         private final double offset=diameter/2;
-        private final double mass1=1;
-        private final double mass2=1;
-        public static Ball k1;
-        public static Ball k2;
+        private static final double mass1=1;
+        private static final double mass2=1;
+        public static Ball k1= new Ball(currentX_1, currentY_1, diameter, vX, vY, mass1,el);
+        public static Ball k2= new Ball(currentX_2, currentY_2 ,diameter, -vX, vY, mass2,el);
         private Ball s1;
         private Ball s2;
+        private double ustrich[]=Physik.Ball_Collision(Physik.bvec(k1,k2),k1, k2,el);
+        private int v[]= new int[4];
+        private double V[]=Physik.Schwerpunkt_Geschwindigkeit(k1, k2);
+        private double u[]=Physik.cms(k1, k2);
+        public  int i=0;
+
+
 
         public Bouncy_Ball_Panel(ApplicationTime thread) {
-            k1 = new Ball(currentX_1, currentY_1, diameter, vX, vY, mass1,el); //blue
-            k2 = new Ball(currentX_2, currentY_2 ,diameter, -vX, vY, mass2,el);//red
             s1 = new Ball(k1);
             s2 = new Ball(k2);
             this.t = thread;
+            v[0]=(int) k1.vX;
+            v[1]=(int) k1.vY;
+            v[2]=(int) k2.vX;
+            v[3]=(int) k2.vY;
         }
+
+        public String a = "bx:     [" + (int) Physik.bvec(k1, k2)[0] + "," + (int) Physik.bvec(k1, k2)[1] + "]";
+        public String b = "|b|:    " + (int) Physik.dis(k1, k2);
+        public String c = "u1_R:  [" + (int) u[0] + "," + (int) u[1] + "]";
+        public String d = "u2_B:  [" + (int) u[2] + "," + (int) u[3] + "]";
+        public String e = "u1´_R: [" + (int) ustrich[0] + "," + (int) ustrich[1] + "]";
+        public String f = "u2´_B: [" + (int) ustrich[2] + "," + (int) ustrich[3] + "]";
+        public String h = "v1_R:  [" + (int) v[0] + "," + (int) v[1] + "]";
+        public String n = "v2_B:  [" + (int) v[2] + "," + (int) v[3] + "]";
+        public String j = "v1´:R: [" + (int) (ustrich[0] + V[0]) + "," + (int) (ustrich[1] + V[1]) + "]";
+        public String k = "v2´_B: [" + (int) (ustrich[2] + V[0]) + "," + (int) (ustrich[3] + V[1]) + "]";
+        public String l = "V:     [" + ((int) V[0]) + "," + ((int) V[1]) + "]";
 
 
         // set this panel's preferred size for auto-sizing the container JFrame
         public Dimension getPreferredSize() {
-            return new Dimension(Konstanten.WINDOW_WIDTH, Konstanten.WINDOW_HEIGHT);
+            return new Dimension(Konstanten.WINDOW_WIDTH+100, Konstanten.WINDOW_HEIGHT);
         }
 
         int width = Konstanten.WINDOW_WIDTH;
@@ -161,6 +182,8 @@ public class Bouncy_Ball extends Animation {
         // drawing operations should be done in this method
         @Override
         protected void paintComponent(Graphics g) {
+
+
 
                 Graphics2D g2d;
                 g2d = (Graphics2D) g;
@@ -179,6 +202,14 @@ public class Bouncy_Ball extends Animation {
 
                 k1.el=el;
                 k2.el=el;
+                ustrich=Physik.Ball_Collision(Physik.bvec(k1,k2),k1, k2,el);
+                v[0]=(int) k1.vX;
+                v[1]=(int) k1.vY;
+                v[2]=(int) k2.vX;
+                v[3]=(int) k2.vY;
+                V=Physik.Schwerpunkt_Geschwindigkeit(k1, k2);
+                u=Physik.cms(k1, k2);
+
                 if(Control_Panel.Reset==true){
                     Control_Panel.Reset=false;
                     k1=new Ball(s1);
@@ -216,7 +247,19 @@ public class Bouncy_Ball extends Animation {
                 }
                 if(k1.diameter/2+k2.diameter/2>=Physik.dis(k1,k2)){
                     Physik.finalcollisionresponds(k1, k2, el);
+
+                    c = "u1_R:  [" + (int) u[0] + "," + (int) u[1] + "]";
+                    d = "u2_B:  [" + (int) u[2] + "," + (int) u[3] + "]";
+                    e = "u1´_R: [" + (int) ustrich[0] + "," + (int) ustrich[1] + "]";
+                    f = "u2´_B: [" + (int) ustrich[2] + "," + (int) ustrich[3] + "]";
+                    h = "v1_R:  [" + (int) v[0] + "," + (int) v[1] + "]";
+                    n = "v2_B:  [" + (int) v[2] + "," + (int) v[3] + "]";
+                    j = "v1´:R: [" + (int) (ustrich[0] + V[0]) + "," + (int) (ustrich[1] + V[1]) + "]";
+                    k = "v2´_B: [" + (int) (ustrich[2] + V[0]) + "," + (int) (ustrich[3] + V[1]) + "]";
                 }
+                a = "bx:     [" + (int) Physik.bvec(k1, k2)[0] + "," + (int) Physik.bvec(k1, k2)[1] + "]";
+                b = "|b|:    " + (int) Physik.dis(k1, k2);
+                l = "V:     [" + ((int) V[0]) + "," + ((int) V[1]) + "]";
                 g2d.setStroke(new BasicStroke(5.0f)); //line width
 
                 g.setColor(Color.BLACK);
@@ -236,38 +279,18 @@ public class Bouncy_Ball extends Animation {
                 g.setColor(Color.green);
                 g.fillOval((int)swp[0]+(int)diameter/4,(int)swp[1]+(int)diameter/4,(int)diameter/2,(int)diameter/2);
                 //System.out.println("hallo")
-                double ustrich[]=Physik.Ball_Collision(Physik.bvec(k1,k2),k1, k2,el);
-                double V[]=Physik.cmv(k1, k2);
-                int v[]= new int[4];
-                v[0]=(int) k1.vX;
-                v[1]=(int) k1.vY;
-                v[2]=(int) k2.vX;
-                v[3]=(int) k2.vY;
-                double u[]=Physik.cms(k1, k2);
-
-                String a="bx:     ["+(int)Physik.bvec(k1,k2)[0]+ ","+(int)Physik.bvec(k1,k2)[1]+"]";
-                String b ="|b|:    "+(int)Physik.dis(k1, k2);
-                String c ="u1_R:  ["+(int)u[0]+ ","+(int)u[1]+"]";
-                String d ="u2_B:  ["+(int)u[2]+ ","+(int)u[3]+"]";
-                String e ="u1´_R: ["+(int)ustrich[0]+","+(int)ustrich[1]+"]";
-                String f ="u2´_B: ["+(int)ustrich[2]+","+(int)ustrich[3]+"]";
-                String h ="v1_R:  ["+(int)v[0]+","+(int)v[1]+"]";
-                String i ="v2_B:  ["+(int)v[2]+ ","+(int)v[3]+"]";
-                String j ="v1´:R: ["+(int)(ustrich[0]+V[0])+","+(int)(ustrich[1]+V[1])+"]";
-                String k ="v2´_B: ["+(int)(ustrich[2]+V[0])+ ","+(int)(ustrich[3]+V[1])+"]";
-                String l ="V:     ["+((int)V[0])+","+((int)V[1])+"]";
                     g.setColor(Color.black);
-                    g.drawString(a,10,height/3);
-                    g.drawString(b,10,height/3+15);
-                    g.drawString(c,10,height/3+30);
-                    g.drawString(d,10,height/3+45);
-                    g.drawString(e,10,height/3+60);
-                    g.drawString(f,10,height/3+75);
-                    g.drawString(h,10,height/3+90);
-                    g.drawString(i,10,height/3+105);
-                    g.drawString(j,10,height/3+120);
-                    g.drawString(k,10,height/3+135);
-                    g.drawString(l,10,height/3+150);
+                    g.drawString(a,width+10,height/3);
+                    g.drawString(b,width+10,height/3+15);
+                    g.drawString(c,width+10,height/3+30);
+                    g.drawString(d,width+10,height/3+45);
+                    g.drawString(e,width+10,height/3+60);
+                    g.drawString(f,width+10,height/3+75);
+                    g.drawString(h,width+10,height/3+90);
+                    g.drawString(n,width+10,height/3+105);
+                    g.drawString(j,width+10,height/3+120);
+                    g.drawString(k,width+10,height/3+135);
+                    g.drawString(l,width+10,height/3+150);
         }
 
     }
